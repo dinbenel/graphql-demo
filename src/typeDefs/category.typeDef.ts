@@ -1,15 +1,10 @@
 import { Field, ObjectType } from 'type-graphql';
 
 @ObjectType()
-class User {
+export class Category {
   @Field(() => String)
-  _id: string;
+  id: string;
 
   @Field(() => String)
   name: string;
-
-  @Field(() => String)
-  email: string;
 }
-
-export default User;

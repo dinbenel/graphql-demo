@@ -5,7 +5,7 @@ const prisma = DBClient.getInstance().prisma;
 export class UserService {
   async create() {
     try {
-      const user = await prisma.users.create({
+      const user = await prisma.user.create({
         data: {
           name: 'dino',
           lastName: 'dino',

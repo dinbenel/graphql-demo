@@ -4,14 +4,14 @@ config();
 import express from 'express';
 import { createYoga } from 'graphql-yoga';
 import { buildSchema } from 'type-graphql';
-import { resolvers } from './resolvers';
+import { ProductResolver, UserResolver } from './resolvers';
 import { devConfig } from './config/development';
 
 (async () => {
   const PORT = process.env.PORT || devConfig.port;
   const app = express();
   const schema = await buildSchema({
-    resolvers: [resolvers.UserResolver],
+    resolvers: [UserResolver, ProductResolver],
   });
   const gqlYoga = createYoga({
     schema,
