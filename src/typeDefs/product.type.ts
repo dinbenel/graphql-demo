@@ -1,5 +1,5 @@
 import { Field, FieldResolver, ObjectType, Root } from 'type-graphql';
-import { Category } from './category.typeDef';
+import { Category } from './category.type';
 
 @ObjectType()
 export class Product {

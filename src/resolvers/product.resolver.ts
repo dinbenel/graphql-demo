@@ -1,6 +1,6 @@
-import { Product } from '../typeDefs/product.typeDef';
 import { ProductService } from '../services/product.service';
 import { FieldResolver, Query, Resolver, Root } from 'type-graphql';
+import { Product } from '../typeDefs/product.type';
 
 @Resolver(() => Product)
 export class ProductResolver {
@@ -20,6 +20,7 @@ export class ProductResolver {
       return products;
     } catch (error) {
       console.log(`cant get products ${error}`);
+      return null;
     }
   }
 }
