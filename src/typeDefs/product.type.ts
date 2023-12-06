@@ -1,9 +1,9 @@
-import { Field, FieldResolver, ObjectType, Root } from 'type-graphql';
+import { Field, FieldResolver, ID, ObjectType, Root } from 'type-graphql';
 import { Category } from './category.type';
 
 @ObjectType()
 export class Product {
-  @Field(() => String)
+  @Field(() => ID)
   id: string;
 
   @Field(() => String)

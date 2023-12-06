@@ -15,6 +15,7 @@ export class ProductResolver {
 
   @Query(() => [Product])
   async products() {
+    console.log('get all products');
     try {
       const products = await this.productService.getAll();
       return products;

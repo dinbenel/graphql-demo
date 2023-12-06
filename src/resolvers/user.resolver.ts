@@ -4,7 +4,8 @@ import { User } from '../typeDefs/user.type';
 
 @Resolver()
 export class UserResolver {
-  constructor(private readonly userService: UserService) {
+  userService: UserService;
+  constructor() {
     this.userService = new UserService();
   }
   @Query(() => String)
