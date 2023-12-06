@@ -1,6 +1,6 @@
 import { ProductService } from '../services/product.service';
 import { FieldResolver, Query, Resolver, Root } from 'type-graphql';
-import { Product } from '../typeDefs/product.type';
+import { Product } from '../typeDefs/product/product.type';
 
 @Resolver(() => Product)
 export class ProductResolver {
@@ -18,9 +18,11 @@ export class ProductResolver {
     console.log('get all products');
     try {
       const products = await this.productService.getAll();
+
       return products;
     } catch (error) {
-      console.log(`cant get products ${error}`);
+      console.log(`cant get products`);
+      console.log(error);
       return null;
     }
   }

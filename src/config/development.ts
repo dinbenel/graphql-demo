@@ -2,6 +2,6 @@ import { config } from 'dotenv';
 config();
 export const devConfig = {
   port: 8080,
-  jwtAccess: process.env.JWT_ACCESS_SECRET,
-  jwtRefresh: process.env.JWT_REFRESH_SECRET,
+  hash: process.env.HASH_SECRET,
+  clerkSecret: process.env.CLERK_SECRET_KEY,
 };

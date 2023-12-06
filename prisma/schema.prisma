@@ -11,29 +11,15 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(cuid())
-  email    String    @unique
-  userName String    @unique
-  profile  Profile?
-  Product  Product[]
-  order    Order[]
-
+  id        String   @id @default(cuid())
+  email     String   @unique
+  userName  String   @unique
+  authId    String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
-}
 
-model Profile {
-  id        String     @id @default(cuid())
-  name      String?
-  lastName  String?
-  password  String?
-  provider  EProviders
-  avatar    String?
-  userId    String     @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now()) @updatedAt
-
-  user User @relation(fields: [userId], references: [id])
+  order   Order[]
+  Product Product[]
 }
 
 model Product {
@@ -71,10 +57,4 @@ model Order {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now()) @updatedAt
   buyer     User      @relation(fields: [userId], references: [id])
-}
-
-enum EProviders {
-  GITHUB
-  GOOGLE
-  CREDENTIALS
 }

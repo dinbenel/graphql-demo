@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../typeDefs/user.type';
+import { User } from '../typeDefs/User/user.type';
 
 export interface Context {
   req: Request;

@@ -6,7 +6,6 @@ import { createYoga } from 'graphql-yoga';
 import { buildSchema } from 'type-graphql';
 import { ProductResolver, UserResolver } from './resolvers';
 import { devConfig } from './config/development';
-import { getUserFromHeader } from './utils/getToken';
 
 (async () => {
   const PORT = process.env.PORT || devConfig.port;
@@ -14,13 +13,11 @@ import { getUserFromHeader } from './utils/getToken';
 
   const schema = await buildSchema({
     resolvers: [UserResolver, ProductResolver],
+    // validate: true,
   });
   const gqlYoga = createYoga({
     schema,
-    context: (ctx) => {
-      const tokenStr = ctx.request.headers.get('Authorization') || '';
-      return getUserFromHeader(tokenStr);
-    },
+    context: (ctx) => {},
   });
 
   app.use(gqlYoga);
