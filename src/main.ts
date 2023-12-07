@@ -10,15 +10,18 @@ import { devConfig } from './config/development';
 (async () => {
   const PORT = process.env.PORT || devConfig.port;
   const app = express();
+
   const schema = await buildSchema({
     resolvers: [UserResolver, ProductResolver],
+    // validate: true,
   });
   const gqlYoga = createYoga({
     schema,
+    context: (ctx) => {},
   });
 
   app.use(gqlYoga);
   app.listen(PORT, () =>
-    console.log(`app is runnig on http://localhost:${PORT}/graphql`)
+    console.log(`app is running on http://localhost:${PORT}/graphql`)
   );
 })();

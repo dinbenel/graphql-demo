@@ -1,25 +1,31 @@
-import { Field, ObjectType } from 'type-graphql';
+import { Field, ID, ObjectType } from 'type-graphql';
 import { User as IUser } from '@prisma/client';
-import { Profile } from './profile.type';
 
 @ObjectType()
 export class User implements IUser {
-  @Field(() => String)
+  @Field(() => ID)
   id: string;
-
-  @Field(() => String)
-  name: string;
 
   @Field(() => String)
   email: string;
 
   @Field(() => String)
   createdAt: Date;
+
   @Field(() => String)
   updatedAt: Date;
+
   @Field(() => String)
   userName: string;
 
-  @Field(() => Profile, { nullable: true })
-  profile: typeof Profile;
+  @Field(() => String)
+  authId: string;
+}
+
+@ObjectType()
+export class UserData {
+  @Field(() => User, { nullable: true })
+  data?: User;
+  @Field(() => String, { nullable: true })
+  error?: string;
 }
