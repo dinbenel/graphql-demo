@@ -1,47 +1,36 @@
-import { Clerk, User } from '@clerk/clerk-sdk-node';
-import { authClient } from '../lib/auth.client';
 import DBClient from '../lib/db.client';
+import { hashSync } from 'bcrypt';
+import { authService } from './auth.service';
 import { UserInput } from '../typeDefs/User/userInput.type';
-import { devConfig } from '../config/development';
+import { User, UserData } from '../typeDefs/User/user.type';
+import { generateResponseData } from '../utils/helpers';
 
 const prisma = DBClient.getInstance().prisma;
-
 export class UserService {
-  private readonly _auth = authClient.auth;
-  async create({
-    email,
-    password,
-    userName,
-  }: {
-    email: string;
-    password: string;
-    userName: string;
-  }): Promise<User | undefined> {
+  async create({ email, password, userName }: UserInput): Promise<UserData> {
     try {
-      const user = await this._auth.users.createUser({
-        password,
-        passwordHasher: 'bcrypt',
-        totpSecret: devConfig.hash,
-        emailAddress: [email],
-        username: userName,
+      const hashPassword = hashSync(password, 10);
+      const clerkUser = await authService.createUser({
+        email,
+        userName,
+        password: hashPassword,
       });
-      return user;
-    } catch (error: any) {
-      console.log('ERRRRRR');
-      console.log(error.errors);
+      if (!clerkUser) throw new Error('cannot create user clerk');
+      const user = await prisma.user.create({
+        data: {
+          authId: clerkUser.id,
+          email,
+          userName,
+        },
+      });
+      return generateResponseData<User>({ data: user, error: undefined });
+    } catch (error) {
+      console.log('ERRRRRR', error.errors);
+      return generateResponseData<undefined>({
+        data: undefined,
+        error: error.errors[0].message,
+      });
     }
-    // const user = await prisma.user.create({
-    //   data: {
-    //     email,
-    //     userName,
-    //     profile: {
-    //       create: {
-    //         provider,
-    //         password,
-    //       },
-    //     },
-    //   },
-    // });
   }
 
   findByMail(email: string) {

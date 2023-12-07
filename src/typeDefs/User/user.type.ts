@@ -21,3 +21,11 @@ export class User implements IUser {
   @Field(() => String)
   authId: string;
 }
+
+@ObjectType()
+export class UserData {
+  @Field(() => User, { nullable: true })
+  data?: User;
+  @Field(() => String, { nullable: true })
+  error?: string;
+}

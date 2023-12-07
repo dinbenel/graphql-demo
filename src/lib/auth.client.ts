@@ -1,7 +1,7 @@
 import ExtendedClerk, { Clerk } from '@clerk/clerk-sdk-node';
 import { devConfig } from '../config/development';
 
-class AuthClient {
+export class AuthClient {
   private _authClient: typeof ExtendedClerk;
   constructor() {
     this._authClient = Clerk({

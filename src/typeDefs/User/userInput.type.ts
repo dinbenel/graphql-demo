@@ -4,15 +4,15 @@ import { errorMsg } from '../../constants/errorMessages';
 import { User } from './user.type';
 
 @InputType()
-export class UserInput implements Partial<User> {
+export class UserInput {
   @Field({ nullable: true })
-  email?: string;
+  email: string;
 
-  // @Field()
-  // password: string;
+  @Field()
+  password: string;
 
-  // @Field()
-  // userName: string;
+  @Field()
+  userName: string;
 }
 
 @InputType()
